@@ -16,10 +16,13 @@ if ! rpm -q grafana;  then
     fi
     # cp prometheus datasource
     . /etc/Tamedia
-    sed s/\$PROMETHEUSADDRESS/$PROMETHEUSADDRESS/g datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
+    CURDIR=$(dirname $0)
+    sed s/\$PROMETHEUSADDRESS/$PROMETHEUSADDRESS/g $CURDIR/datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
     # Set start-stop script
-    chkconfig --add grafana-server
-    service grafana-server start
+    /bin/systemctl daemon-reload
+    /bin/systemctl enable grafana-server.service
+    #chkconfig --add grafana-server
+    #service grafana-server start
 else
     echo "Grafana already installed: Nothing done"
 fi
