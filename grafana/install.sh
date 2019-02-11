@@ -6,7 +6,7 @@
 RELEASE=${GRAFANA_RELEASE:-5.4.2-1}
 DIR=grafana-$RELEASE.linux-amd64
 # Install if not already installed
-if \! rpm -q grafana;  then
+if ! rpm -q grafana;  then
     RPMFILE=grafana-${RELEASE}.x86_64.rpm
     URL="https://dl.grafana.com/oss/release/$RPMFILE"
     yum install -y $URL
