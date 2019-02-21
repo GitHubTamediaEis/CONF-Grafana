@@ -29,9 +29,9 @@ datasources:
   # <bool> enable/disable basic auth
   basicAuth: true
   # <string> basic auth username
-  basicAuthUser: rba
+  basicAuthUser: svc_grafana_datasource
   # <string> basic auth password
-  basicAuthPassword: roland
+  basicAuthPassword: nzdaWEBZ479457tfhqjn32674RCZ
   # <bool> enable/disable with credentials headers
   withCredentials: true
   # <bool> mark as default datasource. Max one per org
