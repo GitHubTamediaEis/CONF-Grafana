@@ -19,7 +19,7 @@ datasources:
   # <int> org id. will default to orgId 1 if not specified
   orgId: 1
   # <string> url
-  url: http://$PROMETHEUSADDRESS
+  url: https://$PROMETHEUSADDRESS
   # <string> database password, if used
   password:
   # <string> database user, if used
@@ -31,7 +31,7 @@ datasources:
   # <string> basic auth username
   basicAuthUser: svc_grafana_datasource
   # <string> basic auth password
-  basicAuthPassword: nzdaWEBZ479457tfhqjn32674RCZ
+  basicAuthPassword: fsta32367IJFYUsrdths2975sdlcvb
   # <bool> enable/disable with credentials headers
   withCredentials: true
   # <bool> mark as default datasource. Max one per org
