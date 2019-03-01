@@ -3,7 +3,7 @@
 # x.y.z = release
 
 # Define release of grafana and deduce installation directory
-RELEASE=${GRAFANA_RELEASE:-5.4.2-1}
+RELEASE=${GRAFANA_RELEASE:-6.0.0}
 DIR=grafana-$RELEASE.linux-amd64
 # Install if not already installed
 if \! rpm -q grafana;  then
