@@ -31,7 +31,7 @@ datasources:
   # <string> basic auth username
   basicAuthUser: svc_grafana_datasource
   # <string> basic auth password
-  basicAuthPassword: fsta32367IJFYUsrdths2975sdlcvb
+  basicAuthPassword: <to change>
   # <bool> enable/disable with credentials headers
   withCredentials: true
   # <bool> mark as default datasource. Max one per org
