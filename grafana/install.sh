@@ -13,6 +13,12 @@ if ! rpm -q grafana;  then
 	echo "Installation of $URL failed"
 	exit 1
     fi
+    
+    #Plugins
+    # plugin: alertmanager (required for use alertmanager as datasource)
+    grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource
+    service grafana-server restart
+
     # cp prometheus datasource
     . /etc/myawsenv
     CURDIR=$(dirname $0)
@@ -26,6 +32,8 @@ if ! rpm -q grafana;  then
     /bin/systemctl enable grafana-server.service
     #chkconfig --add grafana-server
     #service grafana-server start
+    
+
 else
     echo "Grafana already installed: Nothing done"
 fi
