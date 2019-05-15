@@ -2,27 +2,38 @@
 # Installation script of Grafana from rpm
 # x.y.z = release
 
-# Define release of grafana and deduce installation directory
-RELEASE=${GRAFANA_RELEASE:-6.0.1-1}
-DIR=grafana-$RELEASE.linux-amd64
+# Define installation directory
+DIR=grafana-$GRAFANA_RELEASE.linux-amd64
 # Install if not already installed
 if ! rpm -q grafana;  then
-    RPMFILE=grafana-${RELEASE}.x86_64.rpm
+    RPMFILE=grafana-${GRAFANA_RELEASE}.x86_64.rpm
     URL="https://dl.grafana.com/oss/release/$RPMFILE"
     yum install -y $URL
     if [ $? != 0 ]; then
 	echo "Installation of $URL failed"
 	exit 1
     fi
+    
+    #Plugins
+    # plugin: alertmanager (required for use alertmanager as datasource)
+    grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource
+    service grafana-server restart
+
     # cp prometheus datasource
-    . /etc/Tamedia
+    . /etc/myawsenv
     CURDIR=$(dirname $0)
+    S=aws secretsmanager get-secret-value --secret-id ${GRAFANADATASOURCESECRECT} --region ${AWS::Region} --query SecretString --output text
     sed s/\$PROMETHEUSADDRESS/$PROMETHEUSADDRESS/g $CURDIR/datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
+    sed -i s/\$GRAFANADATASOURCEUSER/$GRAFANADATASOURCEUSER/g /etc/grafana/provisioning/datasources/prometheus.yaml
+    sed -i s/\$GRAFANADATASOURCEPASS/$S/g /etc/grafana/provisioning/datasources/prometheus.yaml
+    chmod 600 /etc/grafana/provisioning/datasources/prometheus.yaml
     # Set start-stop script
     /bin/systemctl daemon-reload
     /bin/systemctl enable grafana-server.service
     #chkconfig --add grafana-server
     #service grafana-server start
+    
+
 else
     echo "Grafana already installed: Nothing done"
 fi
