@@ -14,10 +14,6 @@ if ! rpm -q grafana;  then
 	exit 1
     fi
     
-    #Plugins
-    # plugin: alertmanager (required for use alertmanager as datasource)
-    grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource
-    service grafana-server restart
 
     # cp prometheus datasource
     . /etc/myawsenv
@@ -33,6 +29,12 @@ if ! rpm -q grafana;  then
     #chkconfig --add grafana-server
     #service grafana-server start
     
+    #Plugins
+    # plugin: alertmanager (required for use alertmanager as datasource)
+    grafana-cli plugins install camptocamp-prometheus-alertmanager-datasource
+    # Plugin status Panel, required by David, installed 19.07.2019
+    grafana-cli plugins install vonage-status-panel
+    service grafana-server restart
 
 else
     echo "Grafana already installed: Nothing done"
