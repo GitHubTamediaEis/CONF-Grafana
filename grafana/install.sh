@@ -22,7 +22,8 @@ if ! rpm -q grafana;  then
     sed s/\$PROMETHEUSADDRESS/$PROMETHEUSADDRESS/g $CURDIR/datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
     sed -i s/\$GRAFANADATASOURCEUSER/$GRAFANADATASOURCEUSER/g /etc/grafana/provisioning/datasources/prometheus.yaml
     sed -i s/\$GRAFANADATASOURCEPASS/$S/g /etc/grafana/provisioning/datasources/prometheus.yaml
-    chmod 600 /etc/grafana/provisioning/datasources/prometheus.yaml
+    chmod 640 /etc/grafana/provisioning/datasources/prometheus.yaml
+    chown root:grafana /etc/grafana/provisioning/datasources/prometheus.yaml
     # Set start-stop script
     /bin/systemctl daemon-reload
     /bin/systemctl enable grafana-server.service
