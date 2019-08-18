@@ -1,1 +1,1 @@
-export GRAFANA_RELEASE=6.3.2-1
+export GRAFANA_RELEASE=6.3.3-1
