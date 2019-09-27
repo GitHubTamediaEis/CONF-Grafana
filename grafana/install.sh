@@ -18,9 +18,9 @@ if ! rpm -q grafana;  then
     # cp prometheus datasource
     . /etc/myawsenv
     CURDIR=$(dirname $0)
-    S=aws secretsmanager get-secret-value --secret-id ${GRAFANADATASOURCESECRECT} --region ${AWS::Region} --query SecretString --output text
-    sed s/\$PROMETHEUSADDRESS/$PROMETHEUSADDRESS/g $CURDIR/datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
-    sed -i s/\$GRAFANADATASOURCEUSER/$GRAFANADATASOURCEUSER/g /etc/grafana/provisioning/datasources/prometheus.yaml
+    S=aws secretsmanager get-secret-value --secret-id ${PROMETHEUSUSERPASSSECRET} --region ${AWS::Region} --query SecretString --output text
+    sed s/\$PROMETHEUSURL/$PROMETHEUSURL/g $CURDIR/datasource_prometheus.yaml > /etc/grafana/provisioning/datasources/prometheus.yaml
+    sed -i s/\$GRAFANADATASOURCEUSER/$PROMETHEUSUSRENAME/g /etc/grafana/provisioning/datasources/prometheus.yaml
     sed -i s/\$GRAFANADATASOURCEPASS/$S/g /etc/grafana/provisioning/datasources/prometheus.yaml
     chmod 640 /etc/grafana/provisioning/datasources/prometheus.yaml
     chown root:grafana /etc/grafana/provisioning/datasources/prometheus.yaml
